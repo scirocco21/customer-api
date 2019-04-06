@@ -1,0 +1,132 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Customer API
+  description: A simple API to retrieve customer data
+schemes:
+  - http
+  # - https
+host: localhost:10010
+basePath: /
+consumes:
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+
+paths:
+  /customers: 
+      x-swagger-router-controller: customer_api
+      get:
+          operationId: getByPhoneNumber
+          summary: Gets some customers by phoneNumber
+          description: Returns a list of customers matching a query parameter of phoneNumber
+          parameters:
+          - name: phoneNumber
+            in: query
+            description: Customer property
+            type: string
+          responses:
+            200:
+              description: A list of customers
+              schema:
+                $ref: "#/definitions/Customers"
+            400:
+              description: No customer with that phone number could be found.
+
+      post:
+        operationId: save
+        summary: Creates a customer
+        description: Adds a new customer to the customers list.
+        parameters:
+          - name: body
+            description: Customer properties.
+            in: body
+            schema:
+              $ref: "#/definitions/Customer"
+        responses:
+            204:
+              description: Customer successfully created.
+            400:
+              description: Customer could not be created.
+
+  /customers/{id}:
+      x-swagger-router-controller: customer_api
+      get:
+        operationId: getOne
+        summary: Gets a customer
+        description: Returns a single customer by id
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: The customer's id
+            type: string
+        responses:
+          200:
+            description: A Customer
+            schema:
+              $ref: "#/definitions/Customer"
+          404:
+            description: We don't know a customer with that id.
+      put:
+        operationId: update
+        description: update customer phone number
+        parameters:
+          - name: id
+            description: Customer id
+            type: string
+            in: path
+            required: true
+          - name: phone number
+            description: Customer properties
+            in: body
+            required: true
+            schema:
+              $ref: "#/definitions/Customer"
+        responses:
+            "200":
+              description: Success
+              schema:
+                $ref: "#/definitions/GeneralResponse"
+            default:
+              description: Error
+              schema:
+                $ref: "#/definitions/ErrorResponse"
+                
+definitions:
+  Customer:
+    type: object
+    properties:
+      name:
+        type: string
+      address:
+        type: string
+      phoneNumber:
+        type: string
+      email:
+        type: string
+      dob: 
+        type: string
+  Customers:
+    type: array
+    items:
+      $ref: "#/definitions/Customer"
+  GeneralResponse:
+    type: object
+    properties:
+      success:
+        type: number
+        description: returns 1 if successful
+      description:
+        type: string
+        description: a short comment 
+    required:
+      - success
+      - description   
+  ErrorResponse:
+    required: 
+    - message
+    properties: 
+      message:
+        type: string    
