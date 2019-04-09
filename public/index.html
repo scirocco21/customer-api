@@ -88,8 +88,6 @@
       let phoneNumber = document.getElementById('query-phone-number').value;
       let url = "http://localhost:10010/customers?phoneNumber=" + phoneNumber;
 
-      let alertClass = "";
-
       fetch(url)
         .then(
           res => {
