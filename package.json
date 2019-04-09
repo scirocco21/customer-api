@@ -9,10 +9,10 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "superagent": "^5.0.2",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
-    "should": "^7.1.0",
     "supertest": "^1.0.0"
   },
   "scripts": {
