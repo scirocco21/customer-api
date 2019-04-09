@@ -193,6 +193,7 @@
           'Content-Type': 'application/json'
         }
       };
+
       fetch(url, options)
         .then(res => {
           if (res.ok) {
@@ -206,10 +207,13 @@
                     </button>
                   </div>
                 `;
+                // show new number and switch from update button to edit 
                 document.getElementById("update-button-container").innerHTML = `
                   <p>Phone Number: ${phoneNumber}</p>
                   <button class="btn btn-secondary" onclick="displayUpdateForm()">Edit Phone Number</button>
-                `
+                `;
+                // update data-attribute of button container to enable further updates without refresh
+                document.getElementById("update-button-container").dataset.attribute = phoneNumber;
               })
           } else {
             res.json()
@@ -221,6 +225,13 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
+                `;
+                // retrieve original number to display
+                phoneNumber = document.getElementById("update-button-container").dataset.attribute;
+                
+                document.getElementById("update-button-container").innerHTML = `
+                  <p>Phone Number: ${phoneNumber}</p>
+                  <button class="btn btn-secondary" onclick="displayUpdateForm()">Edit Phone Number</button>
                 `
               })
           }
