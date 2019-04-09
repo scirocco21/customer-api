@@ -1,3 +1,7 @@
+# To set up your local version, first run 
+`npm install`
+# to install all dependencies specified in the package.json file
+
 # To start up this project, run 
 `swagger project start`
 
