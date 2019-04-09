@@ -136,37 +136,23 @@
       };
       const url = "http://localhost:10010/customers";
 
-      const alertClass = "";
+      let alertClass = "";
 
       fetch(url, options)
         .then(res => {
-          if (res.ok) {
-            res.json()
-              .then(data => {
-                document.getElementById('create-message').innerHTML = `
-                <div class="alert alert-success alert-dismissible" role="alert">
-                  ${data.description}
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                 </div>
-                `
-              })
-          } else {
-            res.json()
-              .then(data => {
-                document.getElementById('create-message').innerHTML = `
-                <div class="alert alert-warning alert-dismissible" role="alert">
-                  ${data.description}
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                 </div>
-                `
-              })
-          }
-
-        });
+          res.ok ? alertClass = "success" : alertClass = "warning";
+          res.json()
+        .then(data => {
+          document.getElementById('create-message').innerHTML = `
+          <div class="alert alert-${alertClass} alert-dismissible" role="alert">
+            ${data.description}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+          `
+        })
+      });
 
       // clean up form after submission 
       document.getElementById('create-form-container').innerHTML = `
