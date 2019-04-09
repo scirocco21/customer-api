@@ -87,26 +87,26 @@
       document.getElementById("customer-list").innerHTML = "";
       let phoneNumber = document.getElementById('query-phone-number').value;
       let url = "http://localhost:10010/customers?phoneNumber=" + phoneNumber;
+
+      let alertClass = "";
+
       fetch(url)
         .then(
           res => {
-            if (res.ok) {
-              res.json()
-                .then(data => {
+            res.json()
+              .then(data => {
+                if (data.length) {
                   data.forEach(customer => {
                     document.getElementById("customer-list").innerHTML += `
-                    <hr>
-                    <p>Name: ${customer.name}</p>
-                    <p>Email: ${customer.email}</p>
-                    <p>Address: ${customer.address}</p>
-                    <p>Phone Number: ${customer.phoneNumber}</p>
-                    <hr>
+                      <hr>
+                      <p>Name: ${customer.name}</p>
+                      <p>Email: ${customer.email}</p>
+                      <p>Address: ${customer.address}</p>
+                      <p>Phone Number: ${customer.phoneNumber}</p>
+                      <hr>
                   `
                   })
-                })
-            } else {
-              res.json()
-                .then(data => {
+                } else {
                   document.getElementById("customer-list").innerHTML = `
                     <div class="alert alert-warning alert-dismissible" role="alert">
                       ${data.description}
@@ -115,8 +115,8 @@
                       </button>
                     </div>
                   `
-                })
-            }
+                }
+              })
           })
     }
   </script>
